@@ -187,3 +187,117 @@ select * from sys.innodb_lock_waits where locked_table = 'xxx'
 kill <process-id>
 ```
 
+
+
+### 幻读是什么，有什么问题？
+
+关键字：***当前读*** ***insert***
+
+回答：
+
+ 读到其他事务insert已经提交的数据（select for update）
+
+会导致
+
+- 语义错误
+- 数据一致性错误 值数据库 和 binlog 对不上
+
+解决方案
+
+- 将隔离级别改为读已提交,并将 binlog_format该车row（不影响业务的情况下）
+- 引入间隙锁的概念（可能会导致死锁，影响并发度）
+
+
+
+### MySQL的加锁规则是什么
+
+关键字: ***next-key lock*** ***行锁*** ***间隙锁***
+
+回答:
+
+两个原则，两个优化，一个bug
+
+1. 原则：加锁的基本单位是***next-key lock***，即 行锁（锁update） + 间隙锁（锁insert），范围是 (]
+2. 原则：查询过程中***访问到的对象***（索引）才会加锁，两个走不同索引的更新不会被锁，走覆盖索引的就不会锁主键索引
+3. 优化：等值查询给***唯一索引***加锁的时候，会退化为行锁
+4. 优化：等值查询遍历最后一个值不符合条件的时候，会退化为间隙锁
+5. bug： 唯一索引上的***范围查询***会访问到不满足条件的第一个值 （8.0.18 版本已经解决此bug）
+
+
+
+### 慢查询的原因
+
+1. 索引没设计好
+2. SQL没写好
+3. MySQL选错了索引
+
+
+
+### MySQL是怎么保证数据不丢失的
+
+关键词： ***binlog*** ***redolog*** ***WAL*** ***两阶段提交*** 
+
+回答：
+
+MySQL写数据的时候，首先是写日志和内存，然后在写到磁盘里的。
+
+然后通过redolog prepare, binlog, redolog commit 由xid(server层)关联起来两阶段提交保证。任何一个阶段出错都不影响数据恢复。
+
+恢复时:
+
+1. 按顺序扫描redolog，如果redolog中的事务既有prepare标识，又有commit标识，就直接提交
+
+2. 如果redolog事务只有prepare标识，没有commit标识，则说明当前事务在commit阶段crash了，binlog中当前事务是否完整未可知，此时拿着redolog中当前事务的XID（redolog和binlog中事务落盘的标识），去查看binlog中是否存在此XID
+
+    a. 如果binlog中有当前事务的XID，则提交事务（复制redolog disk中的数据页到磁盘数据页）
+
+    b. 如果binlog中没有当前事务的XID，则回滚事务（使用undolog来删除redolog中的对应事务）
+
+ WAL的好处
+
+- 组提交机制 降低 IOPS消耗
+- 顺序读写
+
+
+
+### MySQL是怎么保证主备一致的
+
+关键字:  ***binlog*** ***relaylog*** ***dump_thread*** ***io_thread*** ***sql_thread*** ***bg_thread***
+
+回答：
+
+同步流程：
+
+- master部分
+  - 主线程
+    - undolog mem
+    - data mem
+    - redolog preprare
+    - binlog 
+    - redolog commit
+  - dump 线程 在 binlog 生成的时候将binlog 发现给 slave
+
+- slave 部分
+  - io_thread 将 binlog 写到本币，称为relaylog
+  - sql_thread（可多线程） 读取 relaylog，解析出命令，并执行
+
+binlog格式:
+
+工具: mysqlbinlog
+
+|           | 优点   | 缺点                 |
+| --------- | ------ | -------------------- |
+| STATEMENT | 日志小 | 可能出现unsafe的情况 |
+| ROW       | 安全   | 日志大 效率低        |
+| MIXED     | 折中   |                      |
+
+
+
+### 如何对MySQL进行主备切换
+
+关键字: ***readonly***
+
+回答:
+
+
+
