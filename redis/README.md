@@ -5,17 +5,16 @@
   - 数据结构
 - 系统维度
   - 高性能
-    - epoll
-    - 数据结构
-    - 线程模型
-  - 高可靠
-    - AOF RDB
-    - 哨兵机制
-    - 主从复制
+    - [epoll](./io-model.md)
+    - [数据结构](./data-type.md)
+    - [线程模型](thread-model.md)
+  - 高可用
+    - [AOF](./aof.md) [RDB](./rdb.md)
+    - [哨兵机制](./sentinel.md)
+    - [主从复制](./replica.md)
   - 高可扩展
     - 负载均衡
     - 数据分片
-
 
 
 ### Redis 问题全景
