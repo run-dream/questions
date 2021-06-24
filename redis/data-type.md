@@ -22,13 +22,15 @@ Redis共有5种数据类型, 8种数据编码
 
      数据结构: sds  redisobject和raw在一块儿内存中
 
-     条件: len <= 39
+     条件: len <=  44 （3.2 版本）  
 
-   - REDIS_ENCODING_RAW sds  len > 39
+   - REDIS_ENCODING_RAW sds  len > 44
 
      数据结构: sds  redisobject和 sds 各分配一块内存
 
-     条件: len > 39
+     条件: len >  44
+
+   len、cap以及新增的flag使用的都是int8类型，只占用1个字节，这样64-16（RedisObj头部）-3（sds头部）-1（buf末尾\0）= 44
 
    命令:
 
@@ -85,8 +87,8 @@ Redis共有5种数据类型, 8种数据编码
 
      条件: 
 
-     1. list对象保存的所有字符串元素的长度都小于64字节
-     2. list对象保存的元素数量小于512个，
+     1. list对象保存的所有字符串元素的长度都小于list-max-ziplist-value字节
+     2. list对象保存的元素数量小于list-max-ziplist-entries个，
 
    - REDIS_ENCODING_LINKEDLIST
 
@@ -139,8 +141,8 @@ Redis共有5种数据类型, 8种数据编码
 
      条件:
 
-     1. list对象保存的所有字符串元素的长度都小于64字节
-     2. list对象保存的元素数量小于512个
+     1. list对象保存的所有字符串元素的长度都小于hash-max-ziplist-value字节
+     2. list对象保存的元素数量小于hash-max-ziplist-entries个
 
    - REDIS_ENCODING_HT
 
@@ -192,7 +194,7 @@ Redis共有5种数据类型, 8种数据编码
      条件: 
 
      1. set对象保存的所有元素都是整数值
-     2. set对象保存的元素数量不超过512个
+     2. set对象保存的元素数量不超过set-max-intset-entries个
 
    - EDIS_ENCODING_HT
 
@@ -245,8 +247,8 @@ Redis共有5种数据类型, 8种数据编码
 
      条件: 
 
-     1. 有序集合保存的元素数量小于128个
-     2. 有序集合保存的所有元素的长度都小于64字节
+     1. 有序集合保存的元素数量小于zset-max-ziplist-value个
+     2. 有序集合保存的所有元素的长度都小于zset-max-ziplist-value字节
 
    - REDIS_ENCODING_SKIPLIST
 
@@ -306,6 +308,13 @@ Redis共有5种数据类型, 8种数据编码
 关键词: ***两个全局哈希表*** ***渐近性rehash***
 
 回答:
+
+触发条件：
+
+- 装载因子≥1，同时，哈希表被允许进行 rehash 为避免对aof或者rdb有影响
+- 装载因子≥5。
+
+过程：
 
 1. Redis 默认使用了两个全局哈希表：ht[0] 和 ht[1], 让字典同时持有ht[0] 和 ht[1]两个哈希表，为ht[1] 分配空间
 2. 在字典中维持一个索引计数器变量rehashidx，并将其的值设为0，表示rehash工作正式开始
