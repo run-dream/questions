@@ -77,6 +77,7 @@
   - buffer
 
 - Buffer
+
   - 结构
     - js分配 c++申请
     - 堆外内存
@@ -89,7 +90,9 @@
   - 性能
     - 通过预先转换静态内容为Buffer对象，可以有效地减少CPU的重复使用，节省服务器资源。
     - 读取一个相同的大文件时，highWaterMark值的大小与读取速度的关系：该值越大，读取速度越快。
+
 - 网络
+
   - 模块
     - net -> tcp
     - dgram -> udp
@@ -100,6 +103,120 @@
     - tls/ssl(openssl)
       - 密钥 非堆成加密
       - 数据证书 ca颁发
+
+- web
+
+  - cookie 
+
+    原因: HTTP 无状态协议
+
+    性能:
+
+    - 减少Cookie的大小
+    - 为静态组件使用不同的域名
+    - 减少DNS查询
+
+  - session
+
+    作用：
+
+    1. 减少数据传输
+    2. 隐藏敏感数据
+
+    实现:
+
+    1. 基于Cookie来实现用户和数据的映射
+    2. 通过查询字符串来实现浏览器端和服务器端数据的对应
+
+    共享session: Redis/memcached
+
+    安全:
+
+    - 将口令通过私钥加密进行签名
+    - XSS漏洞
+
+  - 缓存
+
+    - 添加Expires或Cache-Control到报文头中 强缓存
+      - max-age
+      - Expires
+    -  配置ETags（HTTP1.1）协商缓存
+      - If-Modified-Since 304
+        - 文件的时间戳改动但内容并不一定改动
+        - 时间戳只能精确到秒级别，更新频繁的内容将无法生效
+      - If-None-Match/ETag
+        - 散列
+    - 让Ajax可缓存
+
+  - post
+
+    - content-type
+      - application/x-www-form-urlencoded
+      - application/json
+      - application/xml
+      - multipart/form-data boundary
+    - 内存限制
+      - 流
+    - CSRF
+      - 添加随机值
+    - REST
+
+  - 中间件
+
+    - 洋葱圈模型
+
+  - 页面渲染
+
+    - content-type
+    - 模版渲染
+
+- [多进程](https://www.cnblogs.com/tugenhua0707/p/11141076.html)
+
+  - 并发处理模型
+
+    - 同步
+    - 复制进程 预复制
+    - 多线程
+    - 事件驱动
+
+  - child_process
+
+    - 创建
+
+      - spawn
+      - folk
+      - exec
+
+    - IPC
+
+      - 管道 libuv
+
+        - named pipe @windows
+        - *ninx Unix Domain Socket
+
+      - 句柄传递 指向对象的文件描述符 
+
+        作用:
+
+        - 直接复用socket
+
+        - 多个子进程可以同时监听相同端口
+
+        实现:
+
+        - childprocess.send(message, [handler])
+        - process.on(message, callback)
+
+        原理:
+
+        - 机制
+          - 消息传递
+          - IPC
+          - node内部事件抽象和还原
+
+        - 端口共同舰艇
+          - SO_REUSEADDR 文件描述符是相同
+          - 进程服务是抢占式
 
 参考书籍：
 
