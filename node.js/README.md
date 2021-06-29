@@ -1,13 +1,75 @@
+- 核心组成
+
+  - [V8](./v8.md) 执行引擎
+  - [libuv](./libuv) 事件处理机制
+  - [JavaScript](./javascript.md) (ES6)
+  - [框架](./framework.md) (KOA)
+
 - 模块机制
+
   - commonjs
+
+    关键字：
+
+    - require
+    - exports
+
+    实现:
+
+    - 路径分析
+
+      - 缓存
+
+    - 文件定位
+
+      - native 模块
+      - built-in模块
+      - 第三方模块
+        - JavaScript 模块
+        - C/C++ 扩展模块
+
+    - 编译执行
+
+      - 头尾包装 
+
+        ```js
+        (function (exports, require, module, __filename, __dirname){
+            ...
+        })()
+        ```
+
+      - runInContext
+
   - es6
 
 - 异步IO
 
   - 单线程
-  - 事件循环
-  - 观察者
-  - I/O线程池
+
+    指的是JavaScript在运行时实际是单线程，而IO是有libuv的IO线程池处理的
+
+  - 实现 libuv
+
+    异步IO
+
+    - iocp @windows
+    - epoll + 线程池 @linux
+
+  - 异步模型
+
+    基本要素
+
+    - 事件循环
+      - tick
+    - 观察者
+      - 判断是否有事件要处理的过程就是向这些观察者询问是否有要处理的事件
+      - 分类：
+        - idle 观察者 process.nextTick
+        - IO 观察者 
+        - check 观察者 setInmediate setTimeout
+    - 请求对象
+      - 从JavaScript发起调用到内核完成I/O操作的中间产物
+    - IO线程池
 
 - 非I/O的异步API
 
@@ -50,7 +112,7 @@
     - V8进行分配的部分
     - Node自行分配的部分 比如 Buffer
 
-  -  内存泄漏
+  - 内存泄漏
 
     - 原因
 
@@ -72,6 +134,7 @@
   - 思路
     - 内存快照
     - gc
+
 - 大内存应用
   - stream
   - buffer
@@ -214,9 +277,46 @@
           - IPC
           - node内部事件抽象和还原
 
-        - 端口共同舰艇
+        - 端口共同监听
           - SO_REUSEADDR 文件描述符是相同
           - 进程服务是抢占式
+
+  - 集群稳定性
+
+    - 性能问题
+    - 多个工作进程的存活状态管理
+      - 信号
+      - 限量重启
+      - 负载均衡 
+        - 默认抢占式
+        - 扩展 ROUND_ROBIN
+    - 工作进程的平滑重启
+    - 配置或者静态数据的动态重新载入
+      - 第三方数据存储
+      - 主动通知
+
+  - cluster
+
+    - child_process + net
+
+- 测试
+
+  - 单元测试
+    - assert
+    - 测试框架
+      - mocha
+        - 异步测试 done()
+        - 超时设置  setTimeout()
+      - jscover
+    - 模拟异常 mock
+      - before after 替换掉难以模拟的异常
+      - mok
+  - 性能测试
+    - 基准测试 benchmark
+    - 压力测试 
+      - ab
+      - siege
+    - 测试数据和业务数据的转换
 
 参考书籍：
 
