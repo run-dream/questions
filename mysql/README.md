@@ -25,7 +25,7 @@
 | -------- | -------- | ----------------------------------------- | ------------------------------------- |
 | binlog   | Server层 | 记录语句的原始逻辑                        | 逻辑日志 格式 statement，row 可追加写 |
 | redolog  | 引擎层   | 记录在某个数据页上做了什么修改 crash-safe | 物理日志 ring-buffer 循环写           |
-| undolog  | Server层 | 回滚事务                                  |                                       |
+| undolog  | 引擎层 | 回滚事务                                  |                                       |
 | relaylog | Server层 | 主从备份                                  |                                       |
 
 - WAL技术 Write-Ahead Logging
