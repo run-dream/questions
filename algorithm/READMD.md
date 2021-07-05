@@ -14,7 +14,7 @@
 
 - 双指针
 - [滑动窗口](./window.md)
-- [二分法](.binary.md)
+- [二分法](./binary.md)
 - [bfs](./bfs.md)
 - [排序](.sort.md)
 
