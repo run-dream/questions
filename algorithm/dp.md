@@ -158,4 +158,183 @@ https://github.com/run-dream/leetcode-go/tree/master/algorithm/dynamic-plan
     }
     ```
 
-- twoSum
+- 背包
+
+  - 0-1背包
+
+    状态: 剩余容量 w，第i个物品（前面的已经做了选择）
+
+    dp函数定义:```dp[i][j]// i 表示选完第i个物品，j表示剩余的容量```
+
+    选择：对于第i个物品是否携带
+
+    dp方程: ```dp[i][j]= max(dp[i-1][j-weight[i]] + values[i], dp[i-1][j])```
+
+    最后去求```dp[n][w]```
+
+    ```go
+    func pack(w, n int,weights, values []int){
+        dp := make([][]int, n+1)
+        for i := 0; i <= n; i++{
+            dp[i] = make([]int, w + 1)
+        }
+        for i := 1; i <= n; i++{
+            for j := 1; j <= k; j ++ {
+                if weights[i-1] > j {
+                    dp[i][j] = dp[i-1][j]
+                }else{
+                    dp[i][j] = max(dp[i-1][j], dp[i-1][j-weight[i-1]] + values[i])
+                }
+            }
+        }
+        return dp[n][w]
+    }
+    ```
+
+  - 完全背包
+
+    状态：剩余容量w，第i个物品
+
+    dp函数定义: `dp[i][j]` i 表示选完第i个物品，j表示剩余的容量
+
+    选择：是否选择第i个物品
+
+    dp方程
+
+    ```dp[i][j] = sum(dp[i-1][j-values[i]*k] ( k = 0, 1, ...)```
+
+    最后去求`dp[i][w]`
+
+     
+
+    ```go
+    func change(amount int, coins []int){
+        n := len(coins)
+        dp := make([][]int, n+1)
+        for i := 0; i < n; i ++{
+            dp[i] = make([]int, amount+1)
+        }
+        for i := 1; i <= n; i++{
+            for j := 1; j <= amount; j ++{
+                if j - coins[i-1] >= 0 {
+                    dp[i][j] = dp[i-1][j] + dp[i][j-coins[i-1]]
+                }else {
+                    dp[i][j] = dp[i-1][j]
+                }
+            }
+        }
+        return dp[n][amount]
+    }
+    ```
+
+- LCS
+
+  状态: 字符串s,t的长度i,j
+
+  dp函数定义: ```dp[i][j]```表示字符串```s[1:i]```和字符串```t[1:j]```的最长公共子串
+
+  选择: `s[i]` `t[j]`是否会出现在最后的结果里
+
+  动态规划方程:```dp[i][j] = dp[i-1][j-1] + 1 if s[i] == s[j] else max(dp[i-1][j], dp[i][j-1])```
+
+  最后求`dp[len(s)][len(t)]`
+
+  ```go
+  func lcs(s t string) int {
+      if len(s) == 0 || len(t) == 0 {
+          return 0
+      }
+      dp := make([][]int, len(s) + 1)
+      for i := 0; i < len(dp); i ++{
+          dp[i] = make([]int, len(t) + 1)
+      }
+      for i := 1; i <= len(s); i++{
+          for j := 1; j <= len(t); j++{
+              if s[i-1] == t[j-1]{
+                  dp[i][j] = dp[i-1][j-1] + 1
+              }else{
+                  dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+              }
+          }
+      }
+      return dp[len(s)][len(t)]
+  }
+  ```
+
+- 最短编辑距离
+
+  思路： 用两个指针从后往前遍历，建立状态表
+
+  dp定义: `dp[i][j]` 表示子字符串`s[0:i]`到`t[0:j]`的最小编辑距离
+
+  dp方程:   ```dp[i][j] = dp[i-1][j-1] if s[i] == t[j] else min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) ```
+
+  ```go
+  func minEditDistance(s, t string) int {
+      if len(s) == 0 || len(t) == 0 {
+          return 0
+      } 
+      dp := make([][]int, len(s) + 1)
+      for i := 0; i <= len(s); i ++{
+          dp[i] = make([]int, len(t) + 1)
+      }
+      for i := 1; i <= len(s); i++{
+          for j := 1; j <= len(t); j ++{
+              if s[i-1] == t[j-1]{
+                  dp[i][j] = dp[i-1][j-1] // 跳过
+              }else{
+                  dp = min(
+                      dp[i-1][j], // 删除
+                      dp[i][j-1], // 插入
+                      dp[i-1][j-1],// 替换
+                  ) + 1
+              }
+          }
+      }
+      return dp[len(s)][len(t)]
+  }
+  
+  func min(args ...int) int{
+      result := args[0]
+      for _, val := range args{
+          if val > result {
+              result = val
+          }
+      }
+      return result
+  }
+  ```
+
+
+- LIS 最长递增子序列
+
+  状态： 遍历到第i个字符
+
+  dp函数:`dp[i]` 以第i个字符结束时的LIS长度
+
+  动态规划方程: ```dp[i] = max(dp[i], dp[j] + 1) if 0 =< j < i```
+
+  取最大值
+
+  ```go
+  func lcs(nums []int) int {
+      size := len(nums)
+      if size <= 1{
+          return size
+      }
+      dp := make([]int, size)
+      for i := 0; i < size; i++{
+          dp[i] = 1
+      }
+      result := 0
+      for i := 0; i < size; i++{
+          for j := 0; j < i; j++{
+              if nums[j] < nums[i] {
+                  dp[i] = max(dp[i], dp[j] + 1)
+              }
+          }
+          result = max(dp[i], result)
+      }
+      return result
+  }
+  ```
