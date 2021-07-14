@@ -47,17 +47,15 @@ I/O 多路复用的核心设计是 1 个线程处理所有连接的 `等待消�
 
   poll用链表pollfd的方式解决了最大文件描述符数量限制。
 
-  而epoll 则不需要遍历，采用的是回调机制，通过三个系统调用
+  而epoll 则不需要遍历，采用的是**回调机制**，通过三个系统调用
 
   - epoll_create 创建一个 epoll 实例并返回 epollfd
-  - epoll_ctl 注册 file descriptor 等待的 I/O 事件(比如 EPOLLIN、EPOLLOUT 等) 到 epoll 实例上
+  - epoll_ctl 注册 file descriptor 等待的 I/O 事件(比如 EPOLLIN、EPOLLOUT 等) 到 epoll **红黑树**实例上。（红黑树用来处理高效查找和插入）
   - epoll_wait 则是阻塞监听 epoll 实例上所有的 file descriptor 的 I/O 事件，它接收一个用户空间上的一块内存地址 (events 数组)，kernel 会在有 I/O 事件发生的时候把文件描述符列表复制到这块内存地址上，然后 epoll_wait 解除阻塞并返回，最后用户空间上的程序就可以对相应的 fd 进行读写了。
 
   分清了高频调用和低频调用，直接返回已就绪 fd，并减少了数据在用户态和内核态之间的复制。
 
 ### Redis 是怎么实现的IO 多路复用？
-
-
 
 
 
