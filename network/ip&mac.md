@@ -6,30 +6,13 @@
 
 
 
-### 如何查看本机IP地址
-
-``` bash
-# windows
-ipconfig
-# linux
-ifconfig
-ip addr 
-# 区别 net-tools 和 iproute2
-```
-
-iproute2 支持的选项
-
-```bash
-ip { link | addr | addrlabel | route | rule | neigh | ntable | tunnel | maddr | mroute | mrule | monitor | xfrm | token }
-```
-
 ### 网络地址分类
 
 - ABCDE分类 
 
   - 组成
 
-     标志位 网络号 主机号 主机号的长度限制了主机数量 2 ** len(host) - 2
+    标志位 网络号 主机号 主机号的长度限制了主机数量 2 ** len(host) - 2
 
 - 私有地址 公有地址
 
@@ -39,7 +22,7 @@ ip { link | addr | addrlabel | route | rule | neigh | ntable | tunnel | maddr | 
 
     网络号 主机号
 
-###  IP ADDR 信息
+### IP ADDR 信息
 
 - lo loopback 环回接口 用于本机通讯
 
@@ -63,20 +46,6 @@ ip { link | addr | addrlabel | route | rule | neigh | ntable | tunnel | maddr | 
 
 
 
-### 如何配置IP地址
-
-``` bash
-### net-tools
-ifconfig eth1 %ip%/%网络号位数%
-ifconfig eth1 up 
-
-### iproute2
-ip addr add %ip%/%网络号位数% dev eth1
-ip link set up eth1
-```
-
-
-
 ### 如何自动配置IP地址
 
 DHCP 动态主机配置协议 (基于UDP协议) 报文包括 MAC 地址
@@ -94,45 +63,6 @@ DHCP 动态主机配置协议 (基于UDP协议) 报文包括 MAC 地址
 
 
 
-### 有哪些网络设备，区别是什么
-
-- Hub  
-
-  转发器  从一个port接受到数据后，就会原样的向其他的所有端口发送刚才收到的数据。
-
-  优点是便宜简单，缺点是冲突 带宽损耗 
-
-  所在层级: 物理层 L1
-
-- Bridge
-
-  网桥 基于MAC地址实现数据转发 只有两个端口
-
-  优点是: 有端口学习,缓存
-
-  所在层级: 数据链路层 L2
-
-- Switch
-
-  交换机 同样是基于MAC地址实现数据转发 有多个端口 处理能力更强
-
-  所在层级: 数据链路层 L2
-
-- Router
-
-  路由器 基于IP地址实现数据转发，链接不同的子网，实现大的网络互联，
-
-  所在层级: 网络层 L3
-
-- Gateway
-
-  网关 用来连接两个不同的网络，这两个网络可能采用了不同的网络协议在通讯。
-
-  由于现在的网络基本都是基于TCP/IP的协议进行通信的，所以，当前常见的路由器，也就充当了网关的角色。
-
-  所在层级: 网络层 L3
-
-### ARP 协议是什么
 
 已知 IP 地址，求 MAC 地址的协议，为了避免每次都用 ARP 请求，机器本地也会进行 ARP 缓存。
 
