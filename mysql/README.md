@@ -166,3 +166,9 @@
     - 1 row -> n trx_id 高低水位
     - 一致性视图
     - 更新时采用***当前读***  更新数据都是先读后写的，而这个读，只能读当前的值
+
+
+### 参考资料
+[高性能 MySQL](https://github.com/caijc00/programmer_bookshelf_cn/blob/master/%E6%95%B0%E6%8D%AE%E5%BA%93/%E9%AB%98%E6%80%A7%E8%83%BDMySQL%20%E7%AC%AC3%E7%89%88%20%E4%B8%AD%E6%96%87%20.pdf)
+
+[InnoDB 锁](https://segmentfault.com/a/1190000014071758)
