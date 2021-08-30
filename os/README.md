@@ -150,3 +150,11 @@
   - 数据中心
 
     - k8s
+
+
+
+
+
+### 参考资料
+
+1. [现代操作系统](https://github.com/ShineFan/awesome-programming-books-1/blob/master/ComputerSystem/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%88%E7%AC%AC3%E7%89%88%EF%BC%89.pdf)

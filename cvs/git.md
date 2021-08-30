@@ -26,3 +26,6 @@
   - git checkout HEAD .
 
     将history的内容还原到 work dir
+
+
+

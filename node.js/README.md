@@ -318,6 +318,9 @@
       - siege
     - 测试数据和业务数据的转换
 
-参考书籍：
 
-《深入浅出Node.js》 朴灵
+
+### 参考书籍
+
+1.[深入浅出Node.js](https://github.com/wy2008826/books/blob/master/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BANode.js-%E6%9C%B4%E7%81%B5.pdf)
+
