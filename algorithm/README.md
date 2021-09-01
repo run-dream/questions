@@ -12,7 +12,7 @@
 
 技巧:
 
-- [双指针](./two-point)
+- [双指针](./two-point.md)
 - [滑动窗口](./window.md)
 - [二分法](./binary.md)
 - [bfs](./bfs.md)
