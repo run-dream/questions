@@ -9,7 +9,8 @@
     - [数据结构](./data-type.md)
     - [线程模型](thread-model.md)
   - 高可用
-    - [AOF](./aof.md) [RDB](./rdb.md)
+    - [AOF](./aof.md) 
+    - [RDB](./rdb.md)
     - [哨兵机制](./sentinel.md)
     - [主从复制](./replica.md)
   - 高可扩展

@@ -105,12 +105,7 @@ you build it, you run it。
 
 ### 微服务设计
 
-<<<<<<< HEAD
-- APIGateway
-
-=======
 - API Gateway
->>>>>>> ab0b3479aa64b0c07aeae8b35cecd49c0eb934c8
 
   解决的问题:
 
