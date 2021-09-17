@@ -15,11 +15,11 @@
 
 ### 基本组件
 
-- 服务描述
+- [服务描述](./service-describe.md)
   - RESTful API （WIKI/SWAGGER）(Consul)
   - XML 配置 (Dubbo)
-  - IDL 文件 (gRPC Protobuf，跨语言)
-- 注册中心
+  - IDL 文件 ([gRPC](./grpc.md) Protobuf，跨语言)
+- [注册中心](./registry-center.md)
   - 发布
   - 订阅
 - [服务框架](./grpc.md)
