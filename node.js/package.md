@@ -22,3 +22,5 @@
 ## Promise
 - [bluebird](https://github.com/petkaantonov/bluebird)
 
+## 分布式消息队列
+- [bull](https://github.com/OptimalBits/bull)
