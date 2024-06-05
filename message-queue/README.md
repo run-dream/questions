@@ -1,5 +1,5 @@
 ### 基本结构
-- 消息队列
+- [消息队列](./choose.md)
     - [Kafka](http://kafka.apache.org/documentation/)
     - ActiveMQ
     - [RabbitMQ](https://www.rabbitmq.com/documentation.html)
@@ -31,7 +31,7 @@
     - 内存管理
     - 文件和高性能IO
     - 高可用分布式系统
-- 作用
+- [作用](./usage.md)
     - 异步处理
     - 流量控制
     - 服务解耦
