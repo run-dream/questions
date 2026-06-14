@@ -1,0 +1,136 @@
+# 字段定义 — AI Coding 工作流对比调研
+# 生成日期: 2026-06-10
+
+fields:
+
+  # ============ 基本信息 ============
+  - category: "基本信息"
+    fields:
+      - name: "author_team"
+        description: "作者/维护团队"
+        detail_level: "极简"
+      - name: "repo_url"
+        description: "GitHub 仓库地址"
+        detail_level: "极简"
+      - name: "license"
+        description: "开源协议 (MIT/Apache 2.0/Commercial 等)"
+        detail_level: "极简"
+      - name: "maturity"
+        description: "成熟度 (Beta/Stable/Enterprise)，社区活跃度，Star 数趋势"
+        detail_level: "简要"
+      - name: "install_complexity"
+        description: "安装方式 (npx/npm/uv/git clone)、依赖环境、首次使用时间"
+        detail_level: "简要"
+
+  # ============ 核心理念 ============
+  - category: "核心理念"
+    fields:
+      - name: "workflow_philosophy"
+        description: >
+          工作流哲学 — 先共识再实现？先文档再实现？上下文工程优先？
+          分类：对话驱动 / 文档驱动 (SDD) / 上下文工程 / Agent 自治
+        detail_level: "详细"
+      - name: "entry_point"
+        description: "入口方式 — 对话入口 / 文件入口 (YAML/Markdown) / CLI 命令 / Slash Command"
+        detail_level: "简要"
+      - name: "human_role"
+        description: >
+          人类在工作流中的角色定位 —
+          Griller (访谈驱动)、Reviewer (审批驱动)、Approver (确认驱动)、
+          Tech Lead (委派驱动) 还是 Passenger (旁观)？
+        detail_level: "详细"
+      - name: "decision_point_density"
+        description: "人类决策点位置与密度 — 在哪些环节介入、频率、方式 (审批/修改/否决)"
+        detail_level: "详细"
+
+  # ============ 文档体系 ============
+  - category: "文档体系"
+    fields:
+      - name: "artifact_format"
+        description: "中间产物格式 — PRD/Plan/Spec/Skills/Tasks，Markdown/YAML/XML/JSON"
+        detail_level: "详细"
+      - name: "artifact_persistence"
+        description: "产物持久化位置 (repo内/CLI目录/Agent缓存)、版本控制方式、是否可被其他工具消费"
+        detail_level: "详细"
+      - name: "reusability"
+        description: "文档/技能能否跨项目、跨团队复用？是否有社区共享生态？"
+        detail_level: "简要"
+
+  # ============ Agent 协作 ============
+  - category: "Agent 协作"
+    fields:
+      - name: "multi_agent_support"
+        description: "多 Agent 支持 — 是否支持 Sub-Agent、并行执行、wave-based execution、worktree 隔离"
+        detail_level: "详细"
+      - name: "parallel_capability"
+        description: "并行/多 Agent 能力 — 是第一代 (单 Agent 顺序) 还是第二代 (多 Agent 并行)？"
+        detail_level: "简要"
+      - name: "agent_lock_in"
+        description: "平台锁定程度 — 是否绑定特定 AI Agent (Claude Code 独占 vs 跨 25+ 工具)"
+        detail_level: "简要"
+
+  # ============ 上下文管理 ============
+  - category: "上下文管理"
+    fields:
+      - name: "context_strategy"
+        description: "上下文策略 — Smart Zone / 分阶段刷新 / progressive disclosure / subagent 隔离"
+        detail_level: "详细"
+      - name: "context_budget"
+        description: "Token 预算管理 — 是否有上限约束、分阶段刷新、每阶段 token 估算"
+        detail_level: "简要"
+      - name: "progressive_disclosure"
+        description: "是否支持渐进式呈现 (按需加载指令而非全塞给 Agent)"
+        detail_level: "简要"
+
+  # ============ 实施方式 ============
+  - category: "实施方式"
+    fields:
+      - name: "phasing_strategy"
+        description: "分阶段方式 — Tracer Bullets (垂直切片) / 水平分层 / Phase-based / 按模块拆分"
+        detail_level: "详细"
+      - name: "quality_control"
+        description: "质量控制 — 测试位置 (TDD 前置 vs 后置 vs 可选)、代码审查、验证机制、质量门禁"
+        detail_level: "详细"
+      - name: "failure_recovery"
+        description: "失效恢复 — 需求漂移检测、上下文污染恢复、Agent 失控终止、回滚策略"
+        detail_level: "详细"
+      - name: "greenfield_vs_brownfield"
+        description: "绿色/棕色项目适配度 — 对新项目 (greenfield) 和已有项目 (brownfield) 的适配程度"
+        detail_level: "简要"
+
+  # ============ 适用场景 ============
+  - category: "适用场景"
+    fields:
+      - name: "best_for"
+        description: "最适合场景 — 单人/团队？小型/中型/大型项目？探索性/确定性需求？"
+        detail_level: "详细"
+      - name: "learning_curve"
+        description: "学习曲线 — 从零到产出第一个有效结果的时间 (30分钟～数天)"
+        detail_level: "简要"
+      - name: "enterprise_readiness"
+        description: "企业就绪度 — SOC 2/ISO、SSO、审计日志、权限控制"
+        detail_level: "简要"
+      - name: "ecosystem_integration"
+        description: "与现有基础设施集成深度 — GitHub Issues/Jira/Linear/CI Pipeline"
+        detail_level: "简要"
+
+  # ============ 弱点 ============
+  - category: "弱点"
+    fields:
+      - name: "known_limitations"
+        description: "已知不足和主要局限 — 每个人的弱点和不适场景"
+        detail_level: "详细"
+      - name: "anti_patterns"
+        description: "反模式 — 容易误用的场景、常见陷阱"
+        detail_level: "详细"
+
+  # ============ 不确定字段 (deep 阶段自动填充) ============
+  - category: "不确定字段"
+    uncertain: true
+    fields:
+      - name: "real_world_case"
+        description: "真实案例 — 有无公开的成功/失败案例、用户 testimonial"
+      - name: "community_sentiment"
+        description: "社区评价 — Reddit/HN/Discord 上的主流评价和争议"
+      - name: "maintenance_velocity"
+        description: "维护速度 — 更新频率、issue 响应速度、PR 合并速度"

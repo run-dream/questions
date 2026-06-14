@@ -1,0 +1,62 @@
+# AI Coding 工作流对比调研
+# 生成日期: 2026-06-10
+
+topic: "AI Coding 工作流对比 — Matt Pocock 模式 vs OpenSpec vs Superpowers vs Spec Kit vs GSD"
+topic_slug: ai-workflow-comparison
+
+items:
+  - name: "Matt Pocock 模式 (2PRD + Plan)"
+    repo: "https://github.com/mattpocock/skills"
+    stars: "113K+"
+    description: >
+      AI Coding for Real Engineers (Cohort 004) 课程教授的工作流。
+      核心：Grill Me 访谈 → 2PRD 生成 PRD → Tracer Bullets Plan → AFK Phase 执行。
+      轻量、对话驱动、人机共识优先、无框架依赖、Claude Code 原生。
+
+  - name: "OpenSpec"
+    repo: "https://github.com/Fission-AI/OpenSpec"
+    stars: "~39K"
+    description: >
+      Fission-AI 开发的 SDD (Spec-Driven Development) 框架。
+      产生 changes/ 目录结构，支持 25+ AI 工具。
+      delta spec 追踪、opsx:verify 验证、为 brownfield 项目设计。
+
+  - name: "Superpowers"
+    repo: "https://github.com/obra/superpowers"
+    stars: "社区项目"
+    description: >
+      obra 开发的 Agent Skills/Persona 系统。
+      14 个核心 Skills，支持多 Agent 协作、code review skills 体系。
+      可配置 Agent 行为、社区共享生态。
+
+  - name: "Spec Kit"
+    repo: "https://github.com/github/spec-kit"
+    stars: "108K+"
+    description: >
+      GitHub 官方开源的 SDD 工具包 (Python/uv)。
+      7 阶段流水线：Constitution → Specify → Clarify → Plan → Tasks → Analyze → Implement。
+      105+ 社区扩展、22 预设。代表了"重治理、强流程"的 SDD 哲学。
+
+  - name: "GSD / Get Shit Done"
+    repo: "https://github.com/gsd-build/get-shit-done"
+    stars: "63.7K+"
+    description: >
+      TÂCHES 开发的上下文工程/元提示系统。核心创新：每阶段刷新 context 窗口防止 context rot。
+      工作流 Discuss → Plan → Execute → Verify → Complete。
+      XML 原子化任务、多 Agent 编排、波次并行执行。Amazon/Google/Shopify 工程师使用。
+
+execution:
+  batch_size: 5
+  items_per_agent: 1
+  output_dir: "/Users/rundream/Documents/notes/questions/ai-workflow-comparison"
+  strategy: "每个 item 一个独立 agent 并行调研"
+
+supplemental_context:
+  - name: "arXiv 2606.04967"
+    description: "2026 年论文：From Prompt to Process — 系统评估 10 个 SDD 框架的学术分类和方法论"
+  - name: "TracerKit (npm)"
+    description: "纯 Markdown Tracer Bullet 工作流工具，可作为 Matt Pocock 模式工具化实现的参考"
+  - name: "Kiro (AWS)"
+    description: "AWS 企业级 agentic IDE，SDD 为核心"
+  - name: "Antigravity (Google)"
+    description: "Google agent-first 开发平台，2026 I/O 发布 2.0"
